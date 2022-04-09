@@ -21,7 +21,6 @@ mongoose
 const app = express()
 app.use(express.json())
 app.use(morgan("dev"))
-app.get("/", (request,response) => response.json({message: "schedule!"}))
 app.use(ScheduleRouter)
 
 app.listen(PORT, () => {
