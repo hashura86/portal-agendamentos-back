@@ -1,8 +1,9 @@
+import ScheduleRouter from "./router/ScheduleRouter.js"
 import express from "express"
 import dotenv from "dotenv"
 import morgan from "morgan"
 import mongoose from "mongoose"
-import ScheduleRouter from "./router/ScheduleRouter.js"
+import cors from "cors"
 
 dotenv.config()
 
@@ -20,6 +21,7 @@ mongoose
 
 const app = express()
 app.use(express.json())
+app.use(cors())
 app.use(morgan("dev"))
 app.use(ScheduleRouter)
 
