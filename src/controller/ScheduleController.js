@@ -23,36 +23,48 @@ class ScheduleController {
     }
 
     async store(request, response) {
-        const { name, email, password, birthDate, schedulingDate } = request.body
+        const { name, password, birthDate, schedulingDate, schedulingTime, status } = request.body
 
-        const schedule = await ScheduleModel.create({
-            name,
-            email,
-            password,
-            birthDate,
-            schedulingDate,
-        })
-        response.json({ message: "Schedule created!", schedule })
+        try {
+            const schedule = await ScheduleModel.create({
+                name,
+                password,
+                birthDate,
+                schedulingDate,
+                schedulingTime,
+                status,
+            })
+            response.json({ message: "Schedule created!", schedule })
+        } catch (error) {
+            response.status(400).json({ message: error.message })
+        }
     }
 
     async update(request, response) {
 
         const { id } = request.params
-        const { name, email, password, birthDate, schedulingDate } = request.body
+        const { name, password, birthDate, schedulingDate, schedulingTime, status } = request.body
 
-        const schedule = await ScheduleModel.findByIdAndUpdate(id,
-            {
-                name,
-                email,
-                password,
-                birthDate,
-                schedulingDate,
-            },
-            {
-                new: true,
-            })
+        try {
 
-        return response.json({ message: "Schedule updated!", schedule })
+            const schedule = await ScheduleModel.findByIdAndUpdate(id,
+                {
+                    name,
+                    password,
+                    birthDate,
+                    schedulingDate,
+                    schedulingTime,
+                    status,
+                },
+                {
+                    new: true,
+                })
+
+            return response.json({ message: "Schedule updated!", schedule })
+
+        } catch (error) {
+            response.status(400).json({ message: error.message })
+        }
     }
 
     async remove(request, response) {
