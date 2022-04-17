@@ -1,5 +1,4 @@
 import ScheduleModel from "../model/ScheduleModel.js"
-
 class ScheduleController {
 
     async getOne(request, response) {
@@ -24,7 +23,7 @@ class ScheduleController {
 
     async store(request, response) {
         const { name, password, birthDate, schedulingDate, schedulingTime, status } = request.body
-
+        
         try {
             const schedule = await ScheduleModel.create({
                 name,
@@ -79,6 +78,37 @@ class ScheduleController {
         response.status(404).json({ message: "Schedule not found!" })
 
     }
+
+    async validateSchedulingDate(request, response) {
+        const { schedulingDate } = request.params
+
+        const countDate = await ScheduleModel.find({ schedulingDate: schedulingDate }).count()
+
+        if (countDate > 20) {
+            return response.status(403).json({ message: "You cannot create more than 20 entries in the same day !" })
+        }
+
+        response.json({ item: countDate })
+    }
+
+    async validateSchedulingTime(request, response) {
+        const { schedulingDate, schedulingTime } = request.params
+
+        const countTime = await ScheduleModel.find(
+            {
+                schedulingDate: schedulingDate,
+                schedulingTime: schedulingTime,
+            }
+        ).count()
+
+        if (countTime > 2) {
+            return response.status(403).json({ message: "You cannot create more than 2 entries for the same time !" })
+        }
+
+        response.json({ item: countTime })
+    }
+
+
 }
 
 export default ScheduleController
