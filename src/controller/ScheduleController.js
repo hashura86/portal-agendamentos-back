@@ -83,11 +83,7 @@ class ScheduleController {
         const { schedulingDate } = request.params
 
         const countDate = await ScheduleModel.find({ schedulingDate: schedulingDate }).count()
-
-        if (countDate > 20) {
-            return response.status(403).json({ message: "You cannot create more than 20 entries in the same day !" })
-        }
-
+        
         response.json({ item: countDate })
     }
 
@@ -100,10 +96,6 @@ class ScheduleController {
                 schedulingTime: schedulingTime,
             }
         ).count()
-
-        if (countTime > 2) {
-            return response.status(403).json({ message: "You cannot create more than 2 entries for the same time !" })
-        }
 
         response.json({ item: countTime })
     }
