@@ -82,22 +82,34 @@ class ScheduleController {
     async getSchedulingDate(request, response) {
         const { schedulingDate } = request.params
 
-        const countDate = await ScheduleModel.find({ schedulingDate: schedulingDate }).count()
-        
-        response.json({ item: countDate })
+        try {
+            const countDate = await ScheduleModel.find({ schedulingDate: schedulingDate }).count()
+            response.json({ item: countDate })
+
+        }catch(error){
+            response.json({message: error.message})
+        }
+
+
     }
 
     async getSchedulingTime(request, response) {
         const { schedulingDate, schedulingTime } = request.params
 
-        const countTime = await ScheduleModel.find(
-            {
-                schedulingDate: schedulingDate,
-                schedulingTime: schedulingTime,
-            }
-        ).count()
+        try{
+            const countTime = await ScheduleModel.find(
+                {
+                    schedulingDate: schedulingDate,
+                    schedulingTime: schedulingTime,
+                }
+            ).count()
+    
+            response.json({ item: countTime })
 
-        response.json({ item: countTime })
+        }catch(error){
+            response.json({message: error.message})
+        }
+
     }
 
 
