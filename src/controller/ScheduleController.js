@@ -79,7 +79,7 @@ class ScheduleController {
 
     }
 
-    async validateSchedulingDate(request, response) {
+    async getSchedulingDate(request, response) {
         const { schedulingDate } = request.params
 
         const countDate = await ScheduleModel.find({ schedulingDate: schedulingDate }).count()
@@ -87,7 +87,7 @@ class ScheduleController {
         response.json({ item: countDate })
     }
 
-    async validateSchedulingTime(request, response) {
+    async getSchedulingTime(request, response) {
         const { schedulingDate, schedulingTime } = request.params
 
         const countTime = await ScheduleModel.find(
