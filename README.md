@@ -1,2 +1,2 @@
 # portal-agendamentos-back
-Back-end em Node de um portal de agendamentos (desafio pitang)
+Back-end em Node de um portal de agendamentos (desafio pitang 2022) 
